@@ -1,11 +1,8 @@
 import { Avatar,Button,Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import React, { useState ,useEffect } from 'react'
-// import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-// toast.configure()
 
-
+//Register form styles
 const useStyles=makeStyles(()=>({
     paperStyle:{
       
@@ -39,6 +36,7 @@ const useStyles=makeStyles(()=>({
     },
 }))
 
+//sign up form functional component 
 function Signup() {
     const classes = useStyles()
     const [Formvalues, setFormvalues] = useState({
@@ -49,35 +47,30 @@ function Signup() {
     const [formerror, setFormError] =useState({});
     const [isSubmit,setIsSubmit] =useState(false);
 
+//handle the form inputs
     const handleChange = (e)=>{
-        //console.log(e.target)
         const {name,value} =e.target
         setFormvalues({...Formvalues,[name]:value})
         console.log(Formvalues)
 
      } 
-     const handleSumit = (e)=>{
+//handle the form submit
+     const handleSubmit = (e)=>{
          e.preventDefault()
          setFormError(validate(Formvalues))
          setIsSubmit(true)
          
 
      }   
-
+ 
+//show the invalidation errors useing the useEffect
      useEffect(() => {
-         console.log(formerror)
          if(Object.keys(formerror).length === 0 && isSubmit){
-            
-             //console.log(Formvalues)
+            console.log(Formvalues)
          }
      }, [formerror])
 
-    
-
-     
-
-
-
+//validate the inputs on form
      const validate = (values)=>{
          const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
         const errors = {};
@@ -101,7 +94,7 @@ function Signup() {
     return (
         <div className="Container">
         {Object.keys(formerror).length === 0 && isSubmit ? <div style={{color:'green',display:'flex',justifyContent:'center',fontSize:'20px', marginBottom:'20px'}}>Successfully registered !!</div>:null}         
-        <form onSubmit={handleSumit}>
+        <form onSubmit={handleSubmit}>
         <Grid >
             <Paper elevation={10} className={classes.paperStyle}>
             <Grid align='center'>
@@ -148,7 +141,6 @@ function Signup() {
                 />
                 
             </Grid>
-            
             <Button type='submit' color='primary' variant="contained" className={classes.btnstyle} fullWidth>Sign up</Button>
             <Typography className={classes.sgnLink} > Already have an account ?
                 <Link href="/">
